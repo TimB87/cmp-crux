@@ -1,1 +1,1 @@
-require('cmp').register_source('crux', source)
+require('cmp').register_source('crux', require('cmp-crux').new())

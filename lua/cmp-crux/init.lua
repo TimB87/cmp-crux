@@ -4,9 +4,9 @@ local function runCommand(cmd)
   local handle = io.popen(cmd)
   local Output = handle and handle:read '*a'
   if Output then
-    Result = {}
+    result = {}
     for line in Output:gmatch '[^\r\n]+' do
-      table.insert(Result, line)
+      table.insert(result, line)
     end
   else
     print 'No output available.'
@@ -14,7 +14,7 @@ local function runCommand(cmd)
   if handle then
     handle:close()
   end
-  return Result
+  return result
 end
 
 local command = 'prt-cache list'
@@ -26,6 +26,10 @@ for _, value in ipairs(outputTable) do
 end
 
 local source = {}
+
+source.new = function()
+  return setmetatable({}, { __index = source })
+end
 
 function source:is_available()
   if vim.bo.filetype == 'Pkgfile' then
